@@ -13,22 +13,27 @@ branches: "[" (tree_node ","?)+ "]"
 %ignore /\s+/
 %import common.NUMBER
 
-
-
 ?start: rstring
-
-
 rstring: "r\"" regex* "\""
-
 ?regex: character | word | group | pipe
-
 group:"(" (character | word | pipe) ")"
-
 pipe: (character | word | group) "|" (character | word | group)
-
 character: LETTER | NUMBER
 word: WORD
+%ignore /\s+/
+%import common.LETTER
+%import common.NUMBER
+%import common.WORD
 
+?start: rstring
+rstring: "r\"" regex* "\""
+?regex: character | word | group | pipe | class
+group:"(" (character | word | pipe) ")"
+pipe: (character | word | group) "|" (character | word | group)
+character: LETTER | NUMBER
+word: WORD
+range: LETTER "-" LETTER
+class: "[" (character+ | range)+ "]"
 %ignore /\s+/
 %import common.LETTER
 %import common.NUMBER

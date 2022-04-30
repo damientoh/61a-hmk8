@@ -1,57 +1,24 @@
 
-?start: link
 link: "Link" "(" link_first "," link_rest ")" | "Link" "(" link_first ")"
 ?link_first: NUMBER | link
 ?link_rest: NUMBER | link
 %ignore /\s+/
 %import common.NUMBER
 
-?start: tree_node
 tree_node: "Tree" "(" label ")" | "Tree" "(" label "," branches ")"
 ?label: NUMBER
 branches: "[" (tree_node ","?)+ "]"
 %ignore /\s+/
 %import common.NUMBER
 
-
-
-?start: rstring
-
-
 rstring: "r\"" regex* "\""
-
-?regex: character | word | group | pipe
-
-group:"(" (character | word | pipe) ")"
-
-pipe: (character | word | group) "|" (character | word | group)
-
-character: LETTER | NUMBER
-word: WORD
-
-%ignore /\s+/
-%import common.LETTER
-%import common.NUMBER
-%import common.WORD
-
-?start: rstring
-
-
-rstring: "r\"" regex* "\""
-
 ?regex: character | word | group | pipe | class
-
 group:"(" (character | word | pipe) ")"
-
 pipe: (character | word | group) "|" (character | word | group)
-
 character: LETTER | NUMBER
 word: WORD
-
-
 range: LETTER "-" LETTER
 class: "[" (character+ | range)+ "]"
-
 %ignore /\s+/
 %import common.LETTER
 %import common.NUMBER
